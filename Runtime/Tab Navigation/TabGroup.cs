@@ -16,9 +16,11 @@ public class TabGroup : MonoBehaviour
     private List<TabButton> _buttons;
     private TabButton _selectedButton;
 
+#pragma warning disable 0649
     [SerializeField] private Sprite _idleSprite;
     [SerializeField] private Sprite _hoverSprite;
     [SerializeField] private Sprite _selectedSprite;
+#pragma warning restore 0649
 
     public List<TabPair> tabs;
 
