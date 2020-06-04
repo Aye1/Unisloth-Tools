@@ -5,6 +5,7 @@ This element is composed of two scripts: TabGroup and TabButton.
 When a TabButton is clicked, its associated GameObject is displayed, and all GameObjects associated to the TabButtons in the same TabGroup are hidden.
 The TabGroup controls the visual of the TabButtons, you just have to give it the sprites for the Idle, Hovered and Selected states. Just had an Image child to the TabButtons which will be the icon displayed, which won't change whatever the state.
 ## Localization
-TODO
+This module manages the localization of the game from a simple csv.
+Remember to set the locale at the initialization. This locale may (and probably should) be saved in the PlayerPrefs.
 ## Dialogs
-TODO
+This module creates a dialog box with old-fashioned text display (letter-by-letter).
