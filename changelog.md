@@ -10,7 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 ## [1.0.0] - 04-06-2020
 ### Added
 - Finally understood how Packages work, let's make it a real release!
-- .meta files are back (so that we can update correctly frome the Package Manager)
+- .meta files are back (so that we can update correctly from the Package Manager)
 
 ## [0.2.1] - 04-06-2020
 ### Removed
