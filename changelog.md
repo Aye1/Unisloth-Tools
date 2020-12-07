@@ -3,6 +3,10 @@ All notable changes to this package are documented in this file. Please keep it 
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.1] - 07-12-2020
+### Added
+- Alea script to manage randomness easily (int only at the moment)
+
 ## [1.0.0] - 04-06-2020
 ### Added
 - Finally understood how Packages work, let's make it a real release!
@@ -27,6 +31,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 - Creation of the package
 - Added the Tab Panel
 
+[1.0.1]: https://github.com/Aye1/Unisloth-Tools/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/Aye1/Unisloth-Tools/compare/v0.2.1...v1.0.0
 [0.2.1]: https://github.com/Aye1/Unisloth-Tools/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/Aye1/Unisloth-Tools/compare/v0.1.0...v0.2.0

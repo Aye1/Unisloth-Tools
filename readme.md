@@ -9,3 +9,5 @@ This module manages the localization of the game from a simple csv.
 Remember to set the locale at the initialization. This locale may (and probably should) be saved in the PlayerPrefs.
 ## Dialogs
 This module creates a dialog box with old-fashioned text display (letter-by-letter).
+## Alea
+Simple helper to easily get random numbers
