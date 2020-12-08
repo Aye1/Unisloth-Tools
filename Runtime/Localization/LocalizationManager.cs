@@ -3,6 +3,7 @@ using System.IO;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using System.Linq;
 
 public class LocalizationManager : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class LocalizationManager : MonoBehaviour
 
     public bool isReady = false;
     public SystemLanguage locale;
+
+    [SerializeField] private LocalesBindingScriptableObject _localesBinding;
 
     public static LocalizationManager Instance { get; private set; }
 
@@ -35,8 +38,9 @@ public class LocalizationManager : MonoBehaviour
 
     private void LoadLocalizedStrings()
     {
-        _allLocalizedStrings = LoadDicoFromCSV();
+        _allLocalizedStrings = CSVLoader.LoadDicoFromCSV("Localizations");
         isReady = true;
+        Debug.Log("Localizations loaded - " + _allLocalizedStrings.Count + " languages");
     }
 
     public string GetLocString(string key)
@@ -56,67 +60,6 @@ public class LocalizationManager : MonoBehaviour
         return _stringNotFound;
     }
 
-    private Dictionary<string, Dictionary<string, string>> LoadDicoFromCSV()
-    {
-        Dictionary<string, Dictionary<string, string>> res = new Dictionary<string, Dictionary<string, string>>();
-        string[] rawLines = GetRawCSVLines();
-        string[][] splitLines = CleanedLines(RawToSplitLines(rawLines));
-        string[] keys = splitLines[0];
-        for (int i = 1; i < keys.Length; i++)
-        {
-            if (keys[i] != "")
-            {
-                if (res.ContainsKey(keys[i]))
-                {
-                    Debug.LogWarning("Key " + keys[i] + " already loaded");
-                }
-                else
-                {
-                    Dictionary<string, string> newLocaleDic = new Dictionary<string, string>();
-                    for (int j = 1; j < splitLines.Length; j++)
-                    {
-                        newLocaleDic.Add(splitLines[j][0], splitLines[j][i]);
-                    }
-                    res.Add(keys[i], newLocaleDic);
-                }
-            }
-        }
-        return res;
-    }
-
-    private string[] GetRawCSVLines()
-    {
-        string basePath = Application.dataPath;
-        TextAsset resObj = Resources.Load<TextAsset>("Localizations");
-        if (resObj != null)
-        {
-            return RawToLines(resObj.text);
-        }
-        else
-        {
-            Debug.Log("Can't find localization file");
-        }
-        return new string[] { };
-    }
-
-    private string[] RawToLines(string rawText)
-    {
-        string[] separators = { "\n" };
-        return rawText.Split(separators, System.StringSplitOptions.None);
-    }
-
-    private string[][] RawToSplitLines(string[] rawLines)
-    {
-        char separator = ';';
-        string[][] splitLines = new string[rawLines.Length][];
-
-        for (int i = 0; i < rawLines.Length; i++)
-        {
-            splitLines[i] = rawLines[i].Split(separator);
-        }
-        return splitLines;
-    }
-
     private string[][] CleanedLines(string[][] splitLines)
     {
         List<string[]> listLines = new List<string[]>();
@@ -130,29 +73,16 @@ public class LocalizationManager : MonoBehaviour
         return listLines.ToArray();
     }
 
-    public static string SystemLanguageToString(SystemLanguage language)
+    public string SystemLanguageToString(SystemLanguage language)
     {
-        switch (language)
-        {
-            case SystemLanguage.French:
-                return Locales.fr_FR;
-            case SystemLanguage.English:
-                return Locales.en_GB;
-        }
-        return Locales.en_GB;
+        LocaleBinding binding = _localesBinding.bindings.Where(b => b.language == language).FirstOrDefault();
+        return binding == default(LocaleBinding) ? Locales.en_GB : binding.locale;
     }
 
-    public static SystemLanguage StringToSystemLanguage(string language)
+    public SystemLanguage StringToSystemLanguage(string locale)
     {
-        if (language == Locales.fr_FR)
-        {
-            return SystemLanguage.French;
-        }
-        if (language == Locales.en_GB)
-        {
-            return SystemLanguage.English;
-        }
-        return SystemLanguage.English;
+        LocaleBinding binding = _localesBinding.bindings.Where(b => b.locale == locale).FirstOrDefault();
+        return binding == default(LocaleBinding) ? SystemLanguage.English : binding.language; 
     }
 
 #if UNITY_EDITOR
