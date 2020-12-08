@@ -14,8 +14,8 @@ public class LocalizationManagerOdinWindow : OdinEditorWindow
     public string filePath;
 
     [ShowIf("@this.filePath != null")]
-    [DictionaryDrawerSettings(KeyLabel = "Locale", ValueLabel = "Translations")]
-    public Dictionary<string, Dictionary<string, string>> localizations;
+    [TableMatrix(HorizontalTitle = "Locales", HideColumnIndices = true, HideRowIndices = true)]
+    public string[,] rawData;
 
     [MenuItem("Tools/Localization/Open Window")]
     private static void OpenWindow()
@@ -26,7 +26,6 @@ public class LocalizationManagerOdinWindow : OdinEditorWindow
     private void LoadLocalizations()
     {
         string noExtensionFilename = System.IO.Path.GetFileNameWithoutExtension(filePath);
-        Debug.Log(noExtensionFilename);
-        localizations = CSVLoader.LoadDicoFromCSV(noExtensionFilename);
+        rawData = CSVLoader.LoadRawCSVIntoMatrix(noExtensionFilename);
     }
 }

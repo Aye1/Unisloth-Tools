@@ -3,6 +3,9 @@ using UnityEngine;
 
 public static class CSVLoader
 {
+
+    private static readonly char separator = ';';
+
     /// <summary>
     /// Loads a localization CSV into a dictionary
     /// </summary>
@@ -35,9 +38,14 @@ public static class CSVLoader
         return res;
     }
 
+    public static string[,] LoadRawCSVIntoMatrix(string fileName)
+    {
+        string[] rawLines = GetRawCSVLines(fileName);
+        return RawToSplitLines2D(rawLines);
+    }
+
     private static string[] GetRawCSVLines(string fileName)
     {
-        string basePath = Application.dataPath;
         TextAsset resObj = Resources.Load<TextAsset>(fileName);
         if (resObj != null)
         {
@@ -55,12 +63,26 @@ public static class CSVLoader
 
     private static string[][] RawToSplitLines(string[] rawLines)
     {
-        char separator = ';';
         string[][] splitLines = new string[rawLines.Length][];
 
         for (int i = 0; i < rawLines.Length; i++)
         {
             splitLines[i] = rawLines[i].Split(separator);
+        }
+        return splitLines;
+    }
+
+    private static string[,] RawToSplitLines2D(string[] rawLines)
+    {
+        int lineSize = rawLines[0].Split(separator).Length;
+        string[,] splitLines = new string[lineSize, rawLines.Length];
+        for(int i=0; i < rawLines.Length; i++)
+        {
+            string[] splitLine = rawLines[i].Split(separator);
+            for(int j=0; j < splitLine.Length; j++)
+            {
+                splitLines[j, i] = splitLine[j];
+            }
         }
         return splitLines;
     }
