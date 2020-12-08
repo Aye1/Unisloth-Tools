@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using System.Linq;
+using Sirenix.OdinInspector;
 
 public class LocalizationManager : MonoBehaviour
 {
@@ -11,7 +12,10 @@ public class LocalizationManager : MonoBehaviour
     private readonly string _stringNotFound = "Unknown string";
 
     public bool isReady = false;
-    public SystemLanguage locale;
+
+    [ValidateInput("ValidateSelectedLocale", DefaultMessage = "Locale does not exist in the locale binding scriptable object")]
+    [ValueDropdown("GetAvailableLanguages")]
+    public SystemLanguage language;
 
     [SerializeField] private LocalesBindingScriptableObject _localesBinding;
 
@@ -49,7 +53,7 @@ public class LocalizationManager : MonoBehaviour
         {
             return null;
         }
-        string localeString = SystemLanguageToString(locale);
+        string localeString = SystemLanguageToString(language);
         if (_allLocalizedStrings.ContainsKey(localeString))
         {
             if (_allLocalizedStrings[localeString].ContainsKey(key))
@@ -70,6 +74,16 @@ public class LocalizationManager : MonoBehaviour
     {
         LocaleBinding binding = _localesBinding.bindings.Where(b => b.locale == locale).FirstOrDefault();
         return binding == default(LocaleBinding) ? SystemLanguage.English : binding.language; 
+    }
+
+    private bool ValidateSelectedLocale()
+    {
+        return GetAvailableLanguages().Contains(language);
+    }
+
+    public IEnumerable<SystemLanguage> GetAvailableLanguages()
+    {
+        return _localesBinding.bindings.Select(b => b.language);
     }
 
 #if UNITY_EDITOR

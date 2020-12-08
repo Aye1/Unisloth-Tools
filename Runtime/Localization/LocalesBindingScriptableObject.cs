@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Sirenix.OdinInspector;
 
 [Serializable]
 public struct LocaleBinding
@@ -30,7 +31,9 @@ public struct LocaleBinding
 }
 
 [CreateAssetMenu(fileName = "Locales Binding", menuName = "Unisloth/Localization/Locales Bindings")]
+[Serializable]
 public class LocalesBindingScriptableObject : ScriptableObject
 {
+    [TableList]
     public List<LocaleBinding> bindings;
 }
