@@ -60,19 +60,6 @@ public class LocalizationManager : MonoBehaviour
         return _stringNotFound;
     }
 
-    private string[][] CleanedLines(string[][] splitLines)
-    {
-        List<string[]> listLines = new List<string[]>();
-        foreach (string[] splitLine in splitLines)
-        {
-            if (splitLine[0] != "")
-            {
-                listLines.Add(splitLine);
-            }
-        }
-        return listLines.ToArray();
-    }
-
     public string SystemLanguageToString(SystemLanguage language)
     {
         LocaleBinding binding = _localesBinding.bindings.Where(b => b.language == language).FirstOrDefault();

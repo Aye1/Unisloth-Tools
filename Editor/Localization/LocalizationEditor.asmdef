@@ -1,0 +1,16 @@
+{
+    "name": "LocalizationManagerEditor",
+    "references": [
+        "GUID:01dcaeb2689056c489ba2224a70fd0e9",
+        "GUID:43b3a9e7885bc4d15b245f479cf7e8b5"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

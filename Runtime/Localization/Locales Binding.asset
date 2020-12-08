@@ -15,5 +15,5 @@ MonoBehaviour:
   bindings:
   - locale: fr_FR
     language: 14
-  - locale: en_EN
+  - locale: en_GB
     language: 10
