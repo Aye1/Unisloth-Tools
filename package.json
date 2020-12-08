@@ -1,10 +1,15 @@
 {
-  "name": "com.unisloth.tools",
-  "version": "1.0.1",
-  "displayName": "Unisloth Tools",
-  "description": "Big package with all Unisloth tools which can be useful on any project",
-  "unity": "2019.1",
-  "unityRelease": "0b5",
-  "dependencies": {
- }
+    "name": "com.unisloth.tools",
+    "version": "1.0.2",
+    "displayName": "Unisloth Tools",
+    "description": "Big package with all Unisloth tools which can be useful on any project",
+    "unity": "2019.1",
+    "unityRelease": "0b5",
+    "dependencies": {
+    },
+    "author": {
+        "name": "Adrien Janvier",
+        "email": "janvier.adrien@gmail.com",
+        "url": "https://www.adrienjanvier.com"
+    }
 }
