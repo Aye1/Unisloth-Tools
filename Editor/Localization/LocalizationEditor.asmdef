@@ -2,7 +2,8 @@
     "name": "LocalizationManagerEditor",
     "references": [
         "GUID:01dcaeb2689056c489ba2224a70fd0e9",
-        "GUID:43b3a9e7885bc4d15b245f479cf7e8b5"
+        "GUID:43b3a9e7885bc4d15b245f479cf7e8b5",
+        "GUID:2aca9ef4544484cf9884f06d43a3ddf4"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
