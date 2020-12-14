@@ -1,18 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-using System;
 using Sirenix.OdinInspector;
 using Sirenix.OdinInspector.Editor;
+using System;
 
 using TranslationKey = System.String;
 
-
-[CreateAssetMenu(fileName = "New Translation List", menuName = "Assets/Unisloth/Localization/Translation List")]
+[CreateAssetMenu(fileName = "New Translation List", menuName = "Unisloth/Localization/Translation List"), Serializable]
 public class TranslationsList : ScriptableObject
 {
-    public static readonly string defaultTranslationValue = "_NOT_TRANSLATED_";
+    public static readonly string NOT_TRANSLATED = "_NOT_TRANSLATED_";
+    public static readonly string MISSING_TRANSLATIONS = "TRANSLATION_FILE_MISSING";
 
     [HorizontalGroup("Add Key")]
     public string newKey = "";
@@ -52,6 +51,11 @@ public class TranslationsList : ScriptableObject
         _missingTranslations = new List<KeyValuePair<TranslationKey, SystemLanguage>>();
     }
 
+    private void OnEnable()
+    {
+        UpdateMissingTranslations();
+    }
+
     public void AddLanguage(SystemLanguage language)
     {
         if (!_availableLanguages.Contains(language))
@@ -84,7 +88,7 @@ public class TranslationsList : ScriptableObject
 
     public string GetValue(TranslationKey key, SystemLanguage language)
     {
-        return _translations.Where(t => t.key == key && t.language == language).FirstOrDefault().value;
+        return _translations == null ? MISSING_TRANSLATIONS : _translations.Where(t => t.key == key && t.language == language).FirstOrDefault().value;
     }
 
     public bool TranslationExists(TranslationKey key, SystemLanguage language)
@@ -163,7 +167,7 @@ public class TranslationsList : ScriptableObject
         {
             key = key,
             language = language,
-            value = defaultTranslationValue
+            value = NOT_TRANSLATED
         };
         AddTranslation(t);
     }
@@ -211,7 +215,7 @@ public class TranslationsList : ScriptableObject
 
     public void UpdateMissingTranslations()
     {
-        _missingTranslations.Clear();
+        _missingTranslations?.Clear();
         for (int i = 0; i < _availableLanguages.Count; i++)
         {
             for (int j = 0; j < _translationKeys.Count; j++)

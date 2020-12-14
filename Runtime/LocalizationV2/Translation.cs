@@ -60,6 +60,6 @@ public class Translation
 
     private Color GetValueFieldColor()
     {
-        return string.IsNullOrWhiteSpace(value) || value.Equals(TranslationsList.defaultTranslationValue) ? Color.yellow : Color.white;
+        return string.IsNullOrWhiteSpace(value) || value.Equals(TranslationsList.NOT_TRANSLATED) ? Color.yellow : Color.white;
     }
 }
