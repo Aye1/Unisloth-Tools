@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e275e20ab801b48819800159a7fefb98, type: 3}
+  m_Name: Demo Translations List
+  m_EditorClassIdentifier: 
+  newKey: 
+  _translationKeys:
+  - goodjob
+  - welcome
+  _availableLanguages: 0a0000000e000000
+  _translations:
+  - key: goodjob
+    language: 10
+    value: Good Job!
+    parent: {fileID: 11400000}
+  - key: goodjob
+    language: 14
+    value: "Bien jou\xE9 !"
+    parent: {fileID: 11400000}
+  - key: welcome
+    language: 10
+    value: Welcome!
+    parent: {fileID: 11400000}
+  - key: welcome
+    language: 14
+    value: Bienvenue !
+    parent: {fileID: 11400000}

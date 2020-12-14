@@ -7,7 +7,8 @@ public static class CSVLoader
     private static readonly char separator = ';';
 
     /// <summary>
-    /// Loads a localization CSV into a dictionary
+    /// Loads a localization CSV into a dictionary.
+    /// First dimension is locales, second is translation keys
     /// </summary>
     /// <param name="fileName">Name of the localization file, must be in Resources folder</param>
     /// <returns></returns>
@@ -18,21 +19,51 @@ public static class CSVLoader
         string[][] splitLines = CleanedLines(RawToSplitLines(rawLines));
         if (splitLines != null && splitLines.Length > 0)
         {
-            string[] keys = splitLines[0];
-            for (int i = 1; i < keys.Length; i++)
+            string[] locales = splitLines[0];
+            for (int i = 1; i < locales.Length; i++)
             {
-                if (keys[i] != "")
+                if (locales[i] != "")
                 {
-                    if (!res.ContainsKey(keys[i]))
+                    if (!res.ContainsKey(locales[i]))
                     {
                         Dictionary<string, string> newLocaleDic = new Dictionary<string, string>();
                         for (int j = 1; j < splitLines.Length; j++)
                         {
                             newLocaleDic.Add(splitLines[j][0], splitLines[j][i]);
                         }
-                        res.Add(keys[i], newLocaleDic);
+                        res.Add(locales[i], newLocaleDic);
                     }
                 }
+            }
+        }
+        return res;
+    }
+
+    /// <summary>
+    /// Loads a localization CSV into a dictionary.
+    /// First dimension is translations keys, second is locales
+    /// </summary>
+    /// <param name="fileName">Name of the localization file, must be in Resources folder</param>
+    /// <returns></returns>
+    public static Dictionary<string, Dictionary<string, string>> LoadDicoFromCSVKeyFirst(string fileName)
+    {
+        Dictionary<string, Dictionary<string, string>> res = new Dictionary<string, Dictionary<string, string>>();
+        string[] rawLines = GetRawCSVLines(fileName);
+        string[][] splitLines = CleanedLines(RawToSplitLines(rawLines));
+        if (splitLines != null && splitLines.Length > 0)
+        {
+            string[] locales = splitLines[0];
+            int keyCount = splitLines.Length;
+
+            for(int i = 1; i < keyCount; i++)
+            {
+                string[] currentLine = splitLines[i];
+                Dictionary<string, string> keyDico = new Dictionary<string, string>();
+                for(int j = 1; j < locales.Length; j++)
+                {
+                    keyDico.Add(locales[j], currentLine[j]);
+                }
+                res.Add(currentLine[0], keyDico);
             }
         }
         return res;
