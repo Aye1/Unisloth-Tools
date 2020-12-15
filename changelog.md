@@ -3,6 +3,11 @@ All notable changes to this package are documented in this file. Please keep it 
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.1] - 15-12-2020
+### Changed
+- Put both localization packages in namespaces to avoid conflicts
+- Changed first localization package asmdef names
+
 ## [1.1.0] - 14-12-2020
 ### Added
 - Array2D: base class to store 2D arrays and get them in different formats (WIP)
@@ -48,6 +53,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 - Creation of the package
 - Added the Tab Panel
 
+[1.1.1]: https://github.com/Aye1/Unisloth-Tools/compare/v1.1.0...v1.1.1
 [1.1.0]: https://github.com/Aye1/Unisloth-Tools/compare/v1.0.2...v1.1.0
 [1.0.2]: https://github.com/Aye1/Unisloth-Tools/compare/v1.0.1...v1.0.2
 [1.0.1]: https://github.com/Aye1/Unisloth-Tools/compare/v1.0.0...v1.0.1
