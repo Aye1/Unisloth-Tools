@@ -1,21 +1,24 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-[ExecuteAlways]
-[RequireComponent(typeof(Text))]
-public class TextLocalizator : Translator
+namespace Unisloth.Localization
 {
-    private Text _text;
-
-    private void Awake()
+    [ExecuteAlways]
+    [RequireComponent(typeof(Text))]
+    public class TextLocalizator : Translator
     {
-        _text = GetComponent<Text>();
-        LocalizationManager.OnLanguageChanged += UpdateValue;
-    }
+        private Text _text;
 
-    public override void SetText(string text)
-    {
-        _text.text = text;
-    }
+        private void Awake()
+        {
+            _text = GetComponent<Text>();
+            LocalizationManager.OnLanguageChanged += UpdateValue;
+        }
 
+        public override void SetText(string text)
+        {
+            _text.text = text;
+        }
+
+    }
 }

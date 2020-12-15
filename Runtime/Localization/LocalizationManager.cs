@@ -6,96 +6,104 @@ using UnityEditor;
 using System.Linq;
 using Sirenix.OdinInspector;
 
-public class LocalizationManager : MonoBehaviour
+namespace Unisloth.Localization.CSV
 {
-    private Dictionary<string, Dictionary<string, string>> _allLocalizedStrings;
-    private readonly string _stringNotFound = "Unknown string";
-
-    public bool isReady = false;
-
-    [ValidateInput("ValidateSelectedLocale", DefaultMessage = "Locale does not exist in the locale binding scriptable object")]
-    [ValueDropdown("GetAvailableLanguages")]
-    public SystemLanguage language;
-
-    [SerializeField] private LocalesBindingScriptableObject _localesBinding;
-
-    public static LocalizationManager Instance { get; private set; }
-
-    public Dictionary<string, Dictionary<string, string>> AllLocalizedStrings {
-        get {
-            return _allLocalizedStrings;
-        }
-    }
-    private void Awake()
+    public class LocalizationManager : MonoBehaviour
     {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(this.gameObject);
-        }
-        else
-        {
-            Instance = this;
-        }
-        DontDestroyOnLoad(gameObject);
-        LoadLocalizedStrings();
-    }
+        private Dictionary<string, Dictionary<string, string>> _allLocalizedStrings;
+        private readonly string _stringNotFound = "Unknown string";
 
-    private void LoadLocalizedStrings()
-    {
-        _allLocalizedStrings = CSVLoader.LoadDicoFromCSV("Localizations");
-        isReady = true;
-        Debug.Log("Localizations loaded - " + _allLocalizedStrings.Count + " languages");
-    }
+        public bool isReady = false;
 
-    public string GetLocString(string key)
-    {
-        if (!isReady)
+        [ValidateInput("ValidateSelectedLocale", DefaultMessage = "Locale does not exist in the locale binding scriptable object")]
+        [ValueDropdown("GetAvailableLanguages")]
+        public SystemLanguage language;
+
+        [SerializeField] private LocalesBindingScriptableObject _localesBinding;
+
+        public static LocalizationManager Instance { get; private set; }
+
+        public Dictionary<string, Dictionary<string, string>> AllLocalizedStrings
         {
-            return null;
-        }
-        string localeString = SystemLanguageToString(language);
-        if (_allLocalizedStrings.ContainsKey(localeString))
-        {
-            if (_allLocalizedStrings[localeString].ContainsKey(key))
+            get
             {
-                return _allLocalizedStrings[localeString][key];
+                return _allLocalizedStrings;
             }
         }
-        return _stringNotFound;
-    }
+        private void Awake()
+        {
+            if (Instance != null && Instance != this)
+            {
+                Destroy(this.gameObject);
+            }
+            else
+            {
+                Instance = this;
+            }
+            DontDestroyOnLoad(gameObject);
+            LoadLocalizedStrings();
+        }
 
-    public string SystemLanguageToString(SystemLanguage language)
-    {
-        LocaleBinding binding = _localesBinding.bindings.Where(b => b.language == language).FirstOrDefault();
-        return binding == default(LocaleBinding) ? Locales.en_GB : binding.locale;
-    }
+        private void LoadLocalizedStrings()
+        {
+            _allLocalizedStrings = CSVLoader.LoadDicoFromCSV("Localizations");
+            isReady = true;
+            Debug.Log("Localizations loaded - " + _allLocalizedStrings.Count + " languages");
+        }
 
-    public SystemLanguage StringToSystemLanguage(string locale)
-    {
-        LocaleBinding binding = _localesBinding.bindings.Where(b => b.locale == locale).FirstOrDefault();
-        return binding == default(LocaleBinding) ? SystemLanguage.English : binding.language; 
-    }
+        public string GetLocString(string key)
+        {
+            if (!isReady)
+            {
+                return null;
+            }
+            string localeString = SystemLanguageToString(language);
+            if (_allLocalizedStrings.ContainsKey(localeString))
+            {
+                if (_allLocalizedStrings[localeString].ContainsKey(key))
+                {
+                    return _allLocalizedStrings[localeString][key];
+                }
+            }
+            return _stringNotFound;
+        }
 
-    private bool ValidateSelectedLocale()
-    {
-        return GetAvailableLanguages().Contains(language);
-    }
+        public string SystemLanguageToString(SystemLanguage language)
+        {
+            LocaleBinding binding = _localesBinding.bindings.Where(b => b.language == language).FirstOrDefault();
+            return binding == default(LocaleBinding) ? Locales.en_GB : binding.locale;
+        }
 
-    public IEnumerable<SystemLanguage> GetAvailableLanguages()
-    {
-        return _localesBinding.bindings.Select(b => b.language);
-    }
+        public SystemLanguage StringToSystemLanguage(string locale)
+        {
+            LocaleBinding binding = _localesBinding.bindings.Where(b => b.locale == locale).FirstOrDefault();
+            return binding == default(LocaleBinding) ? SystemLanguage.English : binding.language;
+        }
+
+        private bool ValidateSelectedLocale()
+        {
+            return GetAvailableLanguages().Contains(language);
+        }
+
+        public IEnumerable<SystemLanguage> GetAvailableLanguages()
+        {
+            return _localesBinding.bindings.Select(b => b.language);
+        }
 
 #if UNITY_EDITOR
-    [MenuItem("Debug/Dump available localizations")]
-    public static void DisplayAvailableLoc() {
+        [MenuItem("Debug/Dump available localizations")]
+        public static void DisplayAvailableLoc()
+        {
 
-        foreach(Dictionary<string, string> locale in LocalizationManager.Instance.AllLocalizedStrings.Values) {
-            foreach(string value in locale.Values) {
-                Debug.Log(value);
+            foreach (Dictionary<string, string> locale in LocalizationManager.Instance.AllLocalizedStrings.Values)
+            {
+                foreach (string value in locale.Values)
+                {
+                    Debug.Log(value);
+                }
             }
         }
-    }
 #endif
 
+    }
 }

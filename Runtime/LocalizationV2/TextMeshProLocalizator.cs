@@ -1,20 +1,23 @@
 ﻿using UnityEngine;
 using TMPro;
 
-[ExecuteAlways]
-[RequireComponent(typeof(TextMeshProUGUI))]
-public class TextMeshProLocalizator : Translator
+namespace Unisloth.Localization
 {
-    private TextMeshProUGUI _text;
-
-    private void Awake()
+    [ExecuteAlways]
+    [RequireComponent(typeof(TextMeshProUGUI))]
+    public class TextMeshProLocalizator : Translator
     {
-        _text = GetComponent<TextMeshProUGUI>();
-        LocalizationManager.OnLanguageChanged += UpdateValue;
-    }
+        private TextMeshProUGUI _text;
 
-    public override void SetText(string text)
-    {
-        _text.text = text;
+        private void Awake()
+        {
+            _text = GetComponent<TextMeshProUGUI>();
+            LocalizationManager.OnLanguageChanged += UpdateValue;
+        }
+
+        public override void SetText(string text)
+        {
+            _text.text = text;
+        }
     }
 }
