@@ -90,7 +90,12 @@ namespace Unisloth.Localization
 
         public string GetValue(TranslationKey key, SystemLanguage language)
         {
-            return _translations == null ? MISSING_TRANSLATIONS : _translations.Where(t => t.key == key && t.language == language).FirstOrDefault().value;
+            if(_translations == null)
+            {
+                return MISSING_TRANSLATIONS;
+            }
+            Translation translation = _translations.Where(t => t.key == key && t.language == language).FirstOrDefault();
+            return translation == null ? NOT_TRANSLATED : translation.value;
         }
 
         public bool TranslationExists(TranslationKey key, SystemLanguage language)

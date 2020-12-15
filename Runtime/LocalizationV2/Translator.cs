@@ -9,7 +9,20 @@ namespace Unisloth.Localization
     {
         [SerializeField, Required]
         [ValueDropdown("GetKeys"), OnValueChanged("UpdateValue")]
-        protected string _key;
+        private string _key;
+
+        public string Key
+        {
+            get { return _key; }
+            set
+            {
+                if(value != _key)
+                {
+                    _key = value;
+                    UpdateValue();
+                }
+            }
+        }
 
         public void UpdateValue()
         {
