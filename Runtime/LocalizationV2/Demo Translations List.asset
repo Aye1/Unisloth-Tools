@@ -14,23 +14,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   newKey: 
   _translationKeys:
-  - goodjob
+  - goojob
   - welcome
-  _availableLanguages: 0e0000000a000000
+  _availableLanguages: 0a0000000e000000
   _translations:
-  - key: goodjob
+  - key: goojob
+    language: 10
+    value: Good Job!
+    parent: {fileID: 11400000}
+  - key: goojob
     language: 14
     value: "Bien jou\xE9 !"
-    parent: {fileID: 11400000}
-  - key: goodjob
-    language: 10
-    value: Good job!
-    parent: {fileID: 11400000}
-  - key: welcome
-    language: 14
-    value: Bienvenue !
     parent: {fileID: 11400000}
   - key: welcome
     language: 10
     value: Welcome!
+    parent: {fileID: 11400000}
+  - key: welcome
+    language: 14
+    value: Bienvenue !
     parent: {fileID: 11400000}

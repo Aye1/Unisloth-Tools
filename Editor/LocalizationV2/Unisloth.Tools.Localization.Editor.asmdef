@@ -1,0 +1,15 @@
+{
+    "name": "Unisloth.Tools.Localization.Editor",
+    "references": [
+        "GUID:346ef3c1d165d40a0a17d3257e91bc1d"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

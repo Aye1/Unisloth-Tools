@@ -3,9 +3,10 @@ using UnityEngine;
 using System.Linq;
 using Sirenix.OdinInspector;
 using Sirenix.OdinInspector.Editor;
+using Sirenix.Serialization;
 using System;
 
-using TranslationKey = System.String;
+using TranslationKeyString = System.String;
 
 namespace Unisloth.Localization
 {
@@ -23,34 +24,40 @@ namespace Unisloth.Localization
         [DisableIf("@string.IsNullOrWhiteSpace(this.newKey)")]
         public void AddKey()
         {
+            //TranslationKey newTranslationKey = new TranslationKey(newKey);
             _translationKeys.Add(newKey);
             CreateEmptyTranslationsForNewKey(newKey);
             newKey = "";
         }
+        [Space(10)]
 
         [InfoBox("@GetMissingTranslationsText()", VisibleIf = "AreTranslationsMissing", InfoMessageType = InfoMessageType.Warning)]
 
         [SerializeField]
         [OnCollectionChanged(After = "OnKeysCollectionChanged")]
-        [ListDrawerSettings(HideAddButton = true, DraggableItems = false, CustomRemoveElementFunction = "OnKeyRemoved")]
-        private List<TranslationKey> _translationKeys;
+        [ListDrawerSettings(HideAddButton = true, CustomRemoveElementFunction = "OnKeyRemoved")]
+        private List<TranslationKeyString> _translationKeys;
+
+        [Space(10)]
 
         [SerializeField]
         [OnCollectionChanged(After = "OnLanguageCollectionChanged")]
         private List<SystemLanguage> _availableLanguages;
 
+        [Space(10)]
+
         [SerializeField]
         [OnCollectionChanged(After = "OnTranslationCollectionChanged")]
         private List<Translation> _translations;
 
-        private List<KeyValuePair<TranslationKey, SystemLanguage>> _missingTranslations;
+        private List<KeyValuePair<TranslationKeyString, SystemLanguage>> _missingTranslations;
 
         private void Awake()
         {
-            _translationKeys = new List<TranslationKey>();
+            _translationKeys = new List<TranslationKeyString>();
             _availableLanguages = new List<SystemLanguage>();
             _translations = new List<Translation>();
-            _missingTranslations = new List<KeyValuePair<TranslationKey, SystemLanguage>>();
+            _missingTranslations = new List<KeyValuePair<TranslationKeyString, SystemLanguage>>();
         }
 
         private void OnEnable()
@@ -88,7 +95,7 @@ namespace Unisloth.Localization
             }
         }
 
-        public string GetValue(TranslationKey key, SystemLanguage language)
+        public string GetValue(TranslationKeyString key, SystemLanguage language)
         {
             if(_translations == null)
             {
@@ -98,7 +105,7 @@ namespace Unisloth.Localization
             return translation == null ? NOT_TRANSLATED : translation.value;
         }
 
-        public bool TranslationExists(TranslationKey key, SystemLanguage language)
+        public bool TranslationExists(TranslationKeyString key, SystemLanguage language)
         {
             return _translations.Any(t => t.key == key && t.language == language && !string.IsNullOrWhiteSpace(t.value));
         }
@@ -108,7 +115,7 @@ namespace Unisloth.Localization
             return TranslationExists(translation.key, translation.language);
         }
 
-        public bool IsTranslationDuplicated(TranslationKey key, SystemLanguage language)
+        public bool IsTranslationDuplicated(TranslationKeyString key, SystemLanguage language)
         {
             return _translations.Count(t => t.key == key && t.language == language) > 1;
         }
@@ -118,12 +125,12 @@ namespace Unisloth.Localization
             return _availableLanguages.Contains(language);
         }
 
-        public bool KeyExists(TranslationKey key)
+        public bool KeyExists(TranslationKeyString key)
         {
             return _translationKeys.Contains(key);
         }
 
-        public IEnumerable<TranslationKey> GetAvailableTranslationKeys()
+        public IEnumerable<TranslationKeyString> GetAvailableTranslationKeys()
         {
             return _translationKeys;
         }
@@ -153,7 +160,7 @@ namespace Unisloth.Localization
 
         private void OnKeysCollectionChanged(CollectionChangeInfo info, object value)
         {
-            TranslationKey keyChanged = (TranslationKey)info.Value;
+            TranslationKeyString keyChanged = (TranslationKeyString)info.Value;
             switch (info.ChangeType)
             {
                 case CollectionChangeType.Add:
@@ -168,7 +175,7 @@ namespace Unisloth.Localization
             UpdateMissingTranslations();
         }
 
-        public void AddEmptyTranslation(TranslationKey key, SystemLanguage language)
+        public void AddEmptyTranslation(TranslationKeyString key, SystemLanguage language)
         {
             Translation t = new Translation
             {
@@ -179,27 +186,28 @@ namespace Unisloth.Localization
             AddTranslation(t);
         }
 
-        private void CreateEmptyTranslationsForNewKey(TranslationKey key)
+        private void CreateEmptyTranslationsForNewKey(TranslationKeyString key)
         {
             _availableLanguages.ForEach(l => AddEmptyTranslation(key, l));
         }
 
-        private void OnKeyRemoved(TranslationKey key)
+        private void OnKeyRemoved(TranslationKeyString key)
         {
             _translationKeys.Remove(key);
             _translations.RemoveAll(t => t.key == key);
+            UpdateMissingTranslations();
         }
 
         private bool AreTranslationsMissing()
         {
-            return _missingTranslations == null || _missingTranslations.Count > 0;
+            return _missingTranslations != null && _missingTranslations.Count > 0;
         }
 
         private string GetMissingTranslationsText()
         {
             if (_missingTranslations == null)
             {
-                _missingTranslations = new List<KeyValuePair<TranslationKey, SystemLanguage>>();
+                _missingTranslations = new List<KeyValuePair<TranslationKeyString, SystemLanguage>>();
             }
             if (_missingTranslations.Count == 0)
             {
@@ -207,12 +215,12 @@ namespace Unisloth.Localization
             }
 
             string res = "Missing translations:";
-            IEnumerable<IGrouping<SystemLanguage, KeyValuePair<TranslationKey, SystemLanguage>>> missingLocales = _missingTranslations.GroupBy(p => p.Value);
+            IEnumerable<IGrouping<SystemLanguage, KeyValuePair<TranslationKeyString, SystemLanguage>>> missingLocales = _missingTranslations.GroupBy(p => p.Value);
 
-            foreach (IGrouping<SystemLanguage, KeyValuePair<TranslationKey, SystemLanguage>> lang in missingLocales)
+            foreach (IGrouping<SystemLanguage, KeyValuePair<TranslationKeyString, SystemLanguage>> lang in missingLocales)
             {
                 res += "\n" + lang.Key + ":";
-                foreach (KeyValuePair<TranslationKey, SystemLanguage> pair in lang)
+                foreach (KeyValuePair<TranslationKeyString, SystemLanguage> pair in lang)
                 {
                     res += " " + pair.Key;
                 }
@@ -229,7 +237,7 @@ namespace Unisloth.Localization
                 {
                     if (!TranslationExists(_translationKeys[j], _availableLanguages[i]))
                     {
-                        _missingTranslations.Add(new KeyValuePair<TranslationKey, SystemLanguage>(_translationKeys[j], _availableLanguages[i]));
+                        _missingTranslations?.Add(new KeyValuePair<TranslationKeyString, SystemLanguage>(_translationKeys[j], _availableLanguages[i]));
                     }
                 }
             }

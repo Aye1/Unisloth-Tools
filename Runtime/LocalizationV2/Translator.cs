@@ -7,26 +7,21 @@ namespace Unisloth.Localization
     [ExecuteAlways]
     public abstract class Translator : MonoBehaviour
     {
-        [SerializeField, Required]
-        [ValueDropdown("GetKeys"), OnValueChanged("UpdateValue")]
-        private string _key;
 
-        public string Key
+        [TranslationKey, OnValueChanged("UpdateValue")]
+        public string key;
+
+        private void Awake()
         {
-            get { return _key; }
-            set
-            {
-                if(value != _key)
-                {
-                    _key = value;
-                    UpdateValue();
-                }
-            }
+            LocalizationManager.OnLanguageChanged += UpdateValue;
         }
 
         public void UpdateValue()
         {
-            SetText(LocalizationManager.Instance.GetTranslation(_key));
+            SetText(LocalizationManager.Instance.GetTranslation(key));
+/*#if UNITY_EDITOR
+            UnityEditor.EditorUtility.SetDirty(this);
+#endif*/
         }
 
         private void OnEnable()
@@ -37,11 +32,6 @@ namespace Unisloth.Localization
         private void OnDestroy()
         {
             LocalizationManager.OnLanguageChanged -= UpdateValue;
-        }
-
-        private static IEnumerable<string> GetKeys()
-        {
-            return LocalizationManager.Instance.AllKeys();
         }
 
         public abstract void SetText(string text);

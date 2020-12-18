@@ -16,6 +16,8 @@ The new localization package is now directly integrated in Unity. You can use a 
 All translations are stored in a TranslationsList ScriptableObject (Create/Unisloth/Localization/Translation List).
 Some bugs may appear, due to the fact that translations are dynamically updated both in editor and play mode.
 
+Use the attribute [TranslationKey] on a string field to allow the key to be selected directly in the inspector.
+
 ## Dialogs
 This module creates a dialog box with old-fashioned text display (letter-by-letter).
 ## Alea

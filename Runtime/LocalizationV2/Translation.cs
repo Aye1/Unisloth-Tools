@@ -4,8 +4,7 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 using System;
 
-using TranslationKey = System.String;
-
+using TranslationKeyString = System.String;
 
 namespace Unisloth.Localization
 {
@@ -23,7 +22,7 @@ namespace Unisloth.Localization
 
         [OnValueChanged("OnKeyOrLanguageChanged")]
         [ValueDropdown("GetKeys")]
-        public TranslationKey key;
+        public TranslationKeyString key;
 
         [OnValueChanged("OnKeyOrLanguageChanged")]
         [ValueDropdown("GetLanguages")]
@@ -36,7 +35,7 @@ namespace Unisloth.Localization
         [HideInInspector]
         public TranslationsList parent;
 
-        private IEnumerable<TranslationKey> GetKeys()
+        private IEnumerable<TranslationKeyString> GetKeys()
         {
             return parent == null ? null : parent.GetAvailableTranslationKeys();
         }

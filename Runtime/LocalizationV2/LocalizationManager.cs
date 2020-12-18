@@ -2,7 +2,7 @@
 using UnityEngine;
 using Sirenix.OdinInspector;
 
-using TranslationKey = System.String;
+using TranslationKeyString = System.String;
 
 namespace Unisloth.Localization
 {
@@ -58,14 +58,13 @@ namespace Unisloth.Localization
 #if !UNITY_EDITOR
         else
         {
-            Debug.Log("destroy");
             Destroy(gameObject);
             DontDestroyOnLoad(gameObject);
         }
 #endif
         }
 
-        public string GetTranslation(TranslationKey key)
+        public string GetTranslation(TranslationKeyString key)
         {
             if (_translationsList == null)
             {
