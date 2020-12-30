@@ -31,7 +31,6 @@ namespace Unisloth.Localization
         [GUIColor("GetValueFieldColor")]
         public string value;
 
-
         [HideInInspector]
         public TranslationsList parent;
 
@@ -47,11 +46,6 @@ namespace Unisloth.Localization
 
         public void OnKeyOrLanguageChanged()
         {
-            /*if (parent.TranslationExists(key, language))
-            {
-                Debug.Log("translation exists");
-                value = parent.GetValue(key, language);
-            }*/
             parent.UpdateMissingTranslations();
         }
 

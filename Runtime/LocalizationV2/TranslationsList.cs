@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 using System.Linq;
 using Sirenix.OdinInspector;
 using Sirenix.OdinInspector.Editor;
@@ -16,7 +17,10 @@ namespace Unisloth.Localization
         public static readonly string NOT_TRANSLATED = "_NOT_TRANSLATED_";
         public static readonly string MISSING_TRANSLATIONS = "TRANSLATION_FILE_MISSING";
 
-        [HorizontalGroup("Add Key")]
+        public string proofKey = "init";
+        public List<TranslationKeyString> proofKeyList;
+
+        [HorizontalGroup("Add Key"), NonSerialized, ShowInInspector]
         public string newKey = "";
 
         [HorizontalGroup("Add Key")]
@@ -24,7 +28,6 @@ namespace Unisloth.Localization
         [DisableIf("@string.IsNullOrWhiteSpace(this.newKey)")]
         public void AddKey()
         {
-            //TranslationKey newTranslationKey = new TranslationKey(newKey);
             _translationKeys.Add(newKey);
             CreateEmptyTranslationsForNewKey(newKey);
             newKey = "";
@@ -54,9 +57,6 @@ namespace Unisloth.Localization
 
         private void Awake()
         {
-            _translationKeys = new List<TranslationKeyString>();
-            _availableLanguages = new List<SystemLanguage>();
-            _translations = new List<Translation>();
             _missingTranslations = new List<KeyValuePair<TranslationKeyString, SystemLanguage>>();
         }
 
