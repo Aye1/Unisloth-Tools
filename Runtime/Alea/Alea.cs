@@ -14,6 +14,7 @@ public static class Alea
 
     /// <summary>
     /// Returns a random int between min and max (max not included)
+    /// min <= res < max
     /// </summary>
     /// <param name="min"></param>
     /// <param name="max"></param>
@@ -25,6 +26,7 @@ public static class Alea
 
     /// <summary>
     /// Returns a random int between min and max (max included)
+    /// min <= res <= max
     /// </summary>
     /// <param name="min"></param>
     /// <param name="max"></param>
@@ -32,6 +34,30 @@ public static class Alea
     public static int GetIntInc(int min, int max)
     {
         return rnd.Next(min, max + 1);
+    }
+
+    /// <summary>
+    /// Returns a random float between min and max (max not included)
+    /// min <= res < max
+    /// </summary>
+    /// <param name="min"></param>
+    /// <param name="max"></param>
+    /// <returns></returns>
+    public static float GetFloat(float min, float max)
+    {
+        return min + (float)rnd.NextDouble() * (max-min);
+    }
+
+    /// <summary>
+    /// Returns a random double between min and and max (max not included)
+    /// min <= res < max
+    /// </summary>
+    /// <param name="min"></param>
+    /// <param name="max"></param>
+    /// <returns></returns>
+    public static double GetDouble(double min, double max)
+    {
+        return min + rnd.NextDouble() * (max - min);
     }
 }
 
