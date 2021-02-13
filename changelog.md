@@ -69,6 +69,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 - Creation of the package
 - Added the Tab Panel
 
+[1.1.4]: https://github.com/Aye1/Unisloth-Tools/compare/v1.1.3...v1.1.4
 [1.1.3]: https://github.com/Aye1/Unisloth-Tools/compare/v1.1.2...v1.1.3
 [1.1.2]: https://github.com/Aye1/Unisloth-Tools/compare/v1.1.1...v1.1.2
 [1.1.1]: https://github.com/Aye1/Unisloth-Tools/compare/v1.1.0...v1.1.1
