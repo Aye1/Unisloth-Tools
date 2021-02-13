@@ -1,6 +1,6 @@
 {
     "name": "com.unisloth.tools",
-    "version": "1.1.3",
+    "version": "1.1.4",
     "displayName": "Unisloth Tools",
     "description": "Big package with all Unisloth tools which can be useful on any project",
     "unity": "2019.1",

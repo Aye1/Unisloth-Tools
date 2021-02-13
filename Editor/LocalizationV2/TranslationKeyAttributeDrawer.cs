@@ -17,7 +17,7 @@ namespace Unisloth.Localization.Editor
             }
             string key = ValueEntry.SmartValue;
 
-            List<string> keys = GetKeys().ToList();
+            List<string> keys = GetKeys().OrderBy(k => k).ToList();
             int dropdownIndex = Mathf.Max(0, keys.IndexOf(key));
             dropdownIndex = EditorGUI.Popup(rect, dropdownIndex, keys.ToArray());
             string newValue = keys.Count == 0 ? "" : keys.ElementAt(dropdownIndex);

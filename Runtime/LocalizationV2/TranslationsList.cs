@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
 using System.Linq;
 using Sirenix.OdinInspector;
 using Sirenix.OdinInspector.Editor;
-using Sirenix.Serialization;
 using System;
 
 using TranslationKeyString = System.String;
@@ -16,9 +14,6 @@ namespace Unisloth.Localization
     {
         public static readonly string NOT_TRANSLATED = "_NOT_TRANSLATED_";
         public static readonly string MISSING_TRANSLATIONS = "TRANSLATION_FILE_MISSING";
-
-        public string proofKey = "init";
-        public List<TranslationKeyString> proofKeyList;
 
         [HorizontalGroup("Add Key"), NonSerialized, ShowInInspector]
         public string newKey = "";

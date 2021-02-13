@@ -3,6 +3,11 @@ All notable changes to this package are documented in this file. Please keep it 
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.4] - 13-02-2021
+### Changed
+- TranslationKey list of available keys is now displayed in the alphabetical order
+- Fixed [UT-9] (proof and proofList fields removed)
+
 ## [1.1.3] - 31-12-2020
 ### Added
 - Alea provides GetFloat and GetDouble
@@ -76,4 +81,5 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 [0.1.0]: https://github.com/Aye1/Unisloth-Tools/compare/v0.0.1...v0.1.0
 [0.0.1]: https://github.com/Aye1/Unisloth-Tools/releases/tag/v0.0.1
 
+[UT-9]: https://adrienjanvier.atlassian.net/browse/UT-9?atlOrigin=eyJpIjoiODU4MDk2MjE2MjE0NDJjODg4NTcwMDA1MzQ2MGEwNGQiLCJwIjoiaiJ9
 [UT-8]: https://adrienjanvier.atlassian.net/browse/UT-8?atlOrigin=eyJpIjoiMWU2MzRjOTAxNGM2NDYxY2IzOGNhN2ZmYTc4YmFiOTciLCJwIjoiaiJ9
